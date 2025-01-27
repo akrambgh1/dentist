@@ -7,7 +7,7 @@ export default function Nav() {
       <nav>
         <ul className="flex justify-center gap-10 bg-gray-800 text-white p-4">
           <li>
-            <Link to="/">Reginster</Link>
+            <Link to="/register">Reginster</Link>
           </li>
           <li>
             <Link to="/Login">Login</Link>

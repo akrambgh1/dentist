@@ -5,12 +5,14 @@ import { toast } from "react-toastify";
 import { auth, db } from "./firebase";
 import { setDoc, doc } from "firebase/firestore";
 
-
+import { useNavigate } from "react-router-dom";
 export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [age, setAge] = useState("");
+  const navigate = useNavigate();
+
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
@@ -27,7 +29,10 @@ export default function Register() {
       toast.success("user registered successfully",{position:"top-center",});
       console.log(user);
       console.log("user registered successfully");
-       window.location.href= "/profile";
+      setTimeout(() => {
+        navigate("/Profile");
+      }, 1000);
+      
     } catch (error) {
       console.log("Error creating user with email and password:", error);
       toast.error(error.message,{position:"top-center",});
