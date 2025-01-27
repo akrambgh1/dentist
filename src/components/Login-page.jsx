@@ -4,6 +4,7 @@ import Nav from "./navbar";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./firebase";
 import { toast } from "react-toastify";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,6 +24,39 @@ export default function Login() {
       toast.error(error.message,{position:"top-center",});
     }
   };
+
+const handleGRegister = async (e) => {
+    e.preventDefault();
+    try {
+      
+    const provider = new GoogleAuthProvider();
+      
+    signInWithPopup(auth, provider).then(async (result) => {
+      console.log(result)
+      await setDoc(doc(db, "users", result.user.uid), {
+        email: result.user.email,
+        Lastname: result._tokenResponse.lastName,
+        Firstname: result._tokenResponse.firstName,
+        photo: result.user.photoURL,
+        phoneNumber: result.user.phoneNumber,
+        
+      });
+    })
+       
+        toast.success("user registered successfully",{position:"top-center",});
+      setTimeout(() => {
+        navigate("/Profile");
+      }, 1000);
+      }
+      
+      
+     catch (error) {
+      toast.error(error.message,{position:"top-center",});
+    }
+    
+  };
+
+  
   return (
     <>
       <section className="w-screen h-screen bg-gray-900">
@@ -48,6 +82,8 @@ export default function Login() {
             />
             <button className="bg-gray-800 text-white p-2">Login</button>
           </form>
+          <button onClick={handleGRegister} className="bg-gray-800 text-white p-2 mt-4 cursor-pointer">
+            Register with Google</button>
         </div>
       </section>
     </>

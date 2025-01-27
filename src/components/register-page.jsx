@@ -4,43 +4,70 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { toast } from "react-toastify";
 import { auth, db } from "./firebase";
 import { setDoc, doc } from "firebase/firestore";
-
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
-  const [age, setAge] = useState("");
+  const [fname, setFname] = useState("");
+ const [lname, setLname] = useState("");
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      await createUserWithEmailAndPassword(auth, email, password,username,age);
+      await createUserWithEmailAndPassword(auth, email, password);
       const user = auth.currentUser;
       if (user) { 
         await setDoc(doc(db, "users", user.uid), {
           email: user.email,
-          username: username,
-          age: age,
+          Lastname: lname,
+          Firstname: fname,
+          
         });
         
       }
       toast.success("user registered successfully",{position:"top-center",});
-      console.log(user);
-      console.log("user registered successfully");
       setTimeout(() => {
         navigate("/Profile");
       }, 1000);
       
     } catch (error) {
-      console.log("Error creating user with email and password:", error);
       toast.error(error.message,{position:"top-center",});
     }
     
   };
-
-
+  const handleGRegister = async (e) => {
+    e.preventDefault();
+    try {
+      
+    const provider = new GoogleAuthProvider();
+      
+    signInWithPopup(auth, provider).then(async (result) => {
+      console.log(result)
+      await setDoc(doc(db, "users", result.user.uid), {
+        email: result.user.email,
+        Lastname: result._tokenResponse.lastName,
+        Firstname: result._tokenResponse.firstName,
+        photo: result.user.photoURL,
+        phoneNumber: result.user.phoneNumber,
+        
+      });
+    })
+       
+        toast.success("user registered successfully",{position:"top-center",});
+      setTimeout(() => {
+        navigate("/Profile");
+      }, 1000);
+      }
+      
+      
+     catch (error) {
+      toast.error(error.message,{position:"top-center",});
+    }
+    
+  };
+ 
 
   return (
     <>
@@ -51,18 +78,19 @@ export default function Register() {
           <form onSubmit={handleRegister} className="flex flex-col items-center ">
             <input
               type="text"
-              placeholder="Username"
+              placeholder="First name"
               className="bg-gray-800 text-white p-2 mb-4"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={fname}
+              onChange={(e) => setFname(e.target.value)}
             />
             <input
-              type="number"
-              placeholder="age"
+              type="text"
+              placeholder="Last name"
               className="bg-gray-800 text-white p-2 mb-4"
-              value={age}
-              onChange={(e) => setAge(e.target.value)}
+              value={lname}
+              onChange={(e) => setLname(e.target.value)}
             />
+           
             <input
               type="email"
               placeholder="Email"
@@ -79,6 +107,9 @@ export default function Register() {
             />
             <button className="bg-gray-800 text-white p-2 cursor-pointer">
               Register
+            </button>
+            <button onClick={handleGRegister} className="bg-gray-800 text-white p-2 cursor-pointer">
+              Register with Google
             </button>
           </form>
         </div>

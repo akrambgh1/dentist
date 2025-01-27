@@ -36,6 +36,8 @@ export default function Profile() {
             toast.error(error.message, { position: "top-center" });
         };
     }
+    
+    
   return (
     <>
       <section className="w-screen  bg-gray-900  h-screen">
@@ -45,11 +47,13 @@ export default function Profile() {
             <>
               <div className="">
                 <h1 className="text-white text-xl  text-gray-500 mb-6">
-                  Welcome, {userDetails.username}
+                  Welcome, {userDetails.Firstname} {userDetails.Lastname}
                 </h1>
-                <h6 className="text-white">name:{userDetails.username}</h6>
-                <h6 className="text-white">email:{userDetails.email}</h6>
-                <h6 className="text-white">age:{userDetails.age}</h6>
+                              <h6 className="text-white">First name: {userDetails.Firstname}</h6>
+                <h6 className="text-white">lastname: {userDetails.Lastname}</h6>
+                              
+                <h6 className="text-white">email: {userDetails.email}</h6>
+               
                 <button onClick={handLogout} className=" bg-gray-500 p-2 mt-2 cursor-pointer rounded">
                   logout
                 </button>
