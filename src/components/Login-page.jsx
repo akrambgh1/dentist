@@ -15,7 +15,7 @@ export default function Login() {
       await signInWithEmailAndPassword(auth, email, password);
       toast.success("user Login successfully", { position: "top-center", });
       setTimeout(() => {
-        navigate("/Profile");
+        navigate("/dentist/Profile");
       }, 1000);
       
       

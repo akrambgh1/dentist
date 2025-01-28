@@ -7,10 +7,10 @@ export default function Nav() {
       <nav>
         <ul className="flex justify-center gap-10 bg-gray-800 text-white p-4">
           <li>
-            <Link to="/register">Reginster</Link>
+            <Link to="/dentist/register">Reginster</Link>
           </li>
           <li>
-            <Link to="/Login">Login</Link>
+            <Link to="/dentist/Login">Login</Link>
           </li>
         </ul>
       </nav>
