@@ -26,7 +26,7 @@ const handleGRegister = async (e) => {
   
       
         }); {setTimeout(() => {
-        navigate("/dentist/Profile");
+        navigate("/dentist/Profile/");
   }, 1000);;toast.success("user registered successfully", { position: "top-center", });}
     })
        
