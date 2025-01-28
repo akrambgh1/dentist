@@ -11,10 +11,10 @@ function App() {
       <Router>
         <Routes>
           <Route path="/dentist/" element={<Home />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/dentist/register" element={<Register />} />
 
-          <Route path="/login" element={<Login />} />
-          <Route path="/Profile" element={<Profile />} />
+          <Route path="/dentist/login" element={<Login />} />
+          <Route path="/dentist/Profile" element={<Profile />} />
         </Routes>
         <ToastContainer />
       </Router>
