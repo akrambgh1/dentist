@@ -6,7 +6,8 @@ import { auth, db } from "./firebase";
 import { getDoc, doc } from "firebase/firestore";
 import { useEffect } from "react";
 export default function Profile() {
-    const [userDetails, setUserDetails] = useState(null);
+  const [userDetails, setUserDetails] = useState(null);
+  
     const navigate = useNavigate();
   const fetchUser = async () => {
       auth.onAuthStateChanged(async (user) => {
@@ -45,8 +46,13 @@ export default function Profile() {
         <div className="flex flex-col items-center justify-center gap-11 h-[80%]">
           {userDetails ? (
             <>
+              <img
+                className="rounded-full h-24 w-24 object-cover"
+                src={userDetails.photo}
+                alt="user"></img>
+              
               <div className="">
-                <h1 className="text-white text-xl  text-gray-500 mb-6">
+                <h1 className="text-white text-xl  mb-6">
                   Welcome, {userDetails.Firstname} {userDetails.Lastname}
                 </h1>
                               <h6 className="text-white">First name: {userDetails.Firstname}</h6>
@@ -59,9 +65,11 @@ export default function Profile() {
                 </button>
               </div>
             </>
-          ) : (
-            <p>loading....</p>
-          )}
+          ) : (<>
+              <p>loading....</p>
+              
+            </> 
+              )}
         </div>
       </section>
     </>
